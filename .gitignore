@@ -1,0 +1,7 @@
+.python/
+python-*-embed-amd64.zip
+get-pip.py
+server.*.log
+server.log
+__pycache__/
+*.py[cod]

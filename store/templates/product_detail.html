@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ product.name }}</title>
+        <style>
+            body { font-family: Arial; background: #f0f0f0; text-align: center;}
+            .box { background: white; width: 400px; margin: 80px auto; padding: 40px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
+            h1 { color: #333; }
+            .price { color: #e44d26; font-size: 28px; font-weight: bold; }
+            .desc { color: #777; font-size: 16px; }
+            a { display: inline-block; margin-top: 20px; color: #e44d26; text-decoration: none;}
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <h1>{{ product.name }}</h1>
+            <p class="price">₹{{ product.price }}</p>
+            <p class="desc">{{ product.description }}</p>
+            <a href="/add-to-cart/{{ product.id }}/">Add to Cart 🛒</a>
+            <a href="/"> Back to Shop</a>
+            <a href="/wishlist/add/{{ product.pk }}/">❤️ Add to Wishlist</a>
+        </div>
+    <div style="max-width:600px; margin:30px auto;">
+        <h2>⭐ Reviews</h2>
+        {% for review in product.reviews.all %}
+        <div style="border:1px solid #ddd; padding:15px; border-radius:8px; margin-bottom:10px">
+            <strong>{{ review.user.username }}</strong>
+            —⭐{{ review.rating }}/5
+            <p>{{ review.comment }}</p>
+            <small>{{ review.created_at|date:"d M Y"}}</small>
+        </div>
+        {% empty %}
+            <p>No review yet. Be the first!</p>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        <h3>Write a Review</h3>
+        <form method="POST" action="{% url 'add_review' product.pk %}">
+            {% csrf_token %}
+            <select name="rating" style="padding:8px; width:100%; margin-bottom:10px;">
+                <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
+                <option value="4">⭐⭐⭐⭐ 4 - Good</option>
+                <option value="3">⭐⭐⭐ 3 - Average</option>
+                <option value="2">⭐⭐ 2 -poor</option>
+                <option value="1">⭐ 1 -Terrible</option>
+            </select>
+            <textarea name="comment" rows="3" placeholder="write your review..."
+                 style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;"></textarea>
+            <button type="submit"
+                style="background:#c0392b; color:white; padding: 10px 20px; border:none; border-radius:5px; margin-top:10px;">
+                Submitej Review
+            </button>
+        </form>
+        {% endif %}
+    </div>
+    </body>
+</html>

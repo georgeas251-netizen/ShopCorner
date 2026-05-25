@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Checkout - ShopCorner</title>
+        <style>
+            body { font-family: Arial; background: #f5f5f5; padding: 20px; }
+            .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 10px; }
+            h1 { color: #c0392b; }
+            table { width: 100%; border-collapes: collapse; margin-top: 20px; }
+            th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+            th { background: #c0392b; color: white; }
+            .total { font-size: 1.3em; font-weight: bold; color: #c0392b; margin-top: 20px; }
+            .form-ground { margin-top: 20px; }
+            input, textarea { width: 100%; padding: 10px; margin-top: 8px; border: 1px solid #ddd; border-radius: 5px; }
+            .btn-order { background: #27ae60; color: white; padding: 12px 30px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 20px; width: 100; }
+            .btn-back { color: #c0392b; text-decoration: none; display: inline-block; margin-top: 10px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>✅ Checkout</h1>
+            <table>
+                <tr>
+                    <th>Product</th><th>Qty</th><th>Subtotal</th>
+                </tr>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.subtotal }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="total">Total: ₹{{ total }}</div>
+
+            <div class="form-group">
+                <h2>🏠Delivery Details</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="full_name" placeholder="Your Full Name" required>
+                    <input type="text" name="phone" placeholder="Phone Number" requrired>
+                    <textarea rows="3" name="address" placeholder="Delivery Address" required></textarea>
+
+                    <button class="btn-order" type="sub     mit">🎉Place Order</button>
+                </form>
+                <br>
+                <a href="/cart" class="btn-back">← Back to Cart</a>
+            </div>
+        </body>
+    </html>
+
+
+
+
+                    

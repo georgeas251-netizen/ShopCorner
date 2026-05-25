@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Orders</title>
+        <style>
+            body { font-family: Arial; padding: 30px; }
+            h1 { color: #c0392b; }
+            .order-card { border: 1px solid #ddd; border-radius: 8px;
+                          padding: 20px; margin-bottom: 20px; }
+            .status { padding: 4px 10px; border-radius: 20px;
+                      background: #27ae60; color: white; font-size: 14px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            td, th { padding: 8px; border-bottom: 1px solid #eee; text-align: left; }
+            .btn { background: #C0392b; color: white; padding: 8px 16px;
+                   text-decoration: none; border-radius: 5px: }
+        </style>
+    </head>
+    <body>
+        </h1>📦My Order</h1>
+        {% if orders %}
+            {% for order in orders %}
+            <div class="order-card">
+                <p><strong>Order #{{ order.pk }}</strong> —
+                   <span class="status">{{ order.status }}</span></p>
+                <p>🗓️ {{ order.created_at|date:"D M Y" }}</p>
+                <table>
+                    <tr><th>Product</th><th>Qty</th><th>Price</th></tr>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                </p><strong>Total: ₹{{ order.total_price }}</strong></p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>You have no order yet. <a href-"/">Shop Now!</a></p>
+        {% endif %}
+        <a href="/" class="btn">← Back to Home</a>
+    </body>
+</html>
+
+
+
+ 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Order Confirmed!</title>
+        <style>
+            body { font-family: Arial; text-align: center; padding: 50px; }
+            .box { background: #f0fff0; border: 2px solid #27ae60;
+                   padding: 30px; border-radius; 10px;
+                   max-width: 500px; margin: auto; }
+            h1 { color: #27ae60; }
+            table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+            td, th { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+            .btn { background: #c0392b; color: white; padding: 10px 20px;
+                   text-decoration: none; border-radius: 5px; margin-top: 20px;
+                   display: inline-block; }
+            </style>
+        </head>
+        <body>
+            <div class="box">
+                <h1> Order Placed Successfully!</h>
+                <p>Thank you <strong>{{ order.full_name }}</strong>!</p>
+                <p>Order #{{ order.pk }} — Status: <strong>{{ order.status }}</strong></p>
+                <table>
+                    <tr><th>Product</th><th>Qty</th><th>Price</th></tr>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <p><strong>Total: ₹{{ order.total_price }}</strong></p>
+                <a href="/orders" class="btn">📦 View My Orders</a>
+                <a href="/payment/{{ order.pk }}/" class="btn" style="background:#27ae60;">💳Pay now</a>
+            </div>
+        </body>
+</html>
